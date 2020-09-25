@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paytm merchant payment page</title>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/css/uikit.min.css" />
+
+<!-- UIkit JS -->
+
+
+<script src="js/uikit-icons.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/js/uikit-icons.min.js"></script>
+
+</head>
+<body>
+<h1 style="text-align:center">Redirecting you to the merchant....</h1>
+<h1 style="text-align:center">Please do not refresh your page....</h1>
+<span uk-spinner="ratio: 4.5" class="uk-align-center"></span>
+<form action="https://securegw-stage.paytm.in/theia/processTransaction" method="post" name="paytm">
+    {% for key, value in param_dict.items %}
+    <input type="hidden" name="{{key}}" value="{{value}}">
+    {% endfor %}
+
+</form>
+</body>
+<script>
+document.paytm.submit()
+</script>
+</html>

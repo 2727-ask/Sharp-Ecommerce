@@ -1,0 +1,108 @@
+{% extends 'shop/base.html'%}
+{% load static%}
+{% block tracker%}
+
+
+<div class="uk-container">
+    <h2 class="uk-text-light" style="text-align:center ;margin-top:20px">Track Your Orders here</h2>
+<div class="uk-card uk-card-default uk-width-1-2@m uk-align-center" style="margin-top:100px">
+    <div class="uk-card-header">
+        <div class="uk-grid-small uk-flex-middle" uk-grid>
+            <div class="uk-width-auto">
+                <img class="uk-border-circle" width="40" height="40" src="{% static 'shop/sf.png'%}">
+            </div>
+            <div class="uk-width-expand">
+                <h3 class="uk-card-title uk-margin-remove-bottom">Tracker</h3>
+                <p class="uk-text-meta uk-margin-remove-top"></p>
+            </div>
+        </div>
+    </div>
+    <div class="uk-card-body">
+
+       <form method="post" action="#" id="trackerForm">{% csrf_token %}
+
+    <div class="uk-margin">
+        <h3> Enter Product Tracking Id Here</h3>
+        <div class="uk-inline uk-align-center">
+            <span class="uk-form-icon" uk-icon="icon: user"></span>
+            <input class="uk-input" type="text" id="orderId" name="orderId" >
+        </div>
+    </div>
+
+    <div class="uk-margin">
+        <h3>Enter Valid Email Address</h3>
+        <div class="uk-inline">
+            <span class="uk-form-icon uk-form-icon-flip" uk-icon="icon: mail"></span>
+            <input class="uk-input" type="text" id="email" name="email">
+        </div>
+    </div>
+
+</form>
+
+    </div>
+    <div class="uk-card-footer">
+       <button type="submit" class="uk-button uk-button-default" >Track</button>
+    </div>
+</div>
+
+
+    <h1>Your Order Status</h1>
+    <ul class="list-group" id="items1">
+            	Enter your order Id and Email and click Track Order to find details about your order!
+            </ul>
+
+
+
+
+
+
+</div>
+
+
+
+{%endblock%}
+
+{% block trackscript %}
+
+
+
+$('#trackerForm').submit(function(event) {
+    console.log("hi")
+    $('#items1').empty();
+    var formData = {
+        'orderId': $('input[name=orderId]').val(),
+        'email': $('input[name=email]').val(),
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+    };
+    console.log(formData);
+    $.ajax({
+            type: 'POST',
+            url: '/tracker/',
+            data: formData,
+            encode: true
+        })
+        .done(function(data) {
+            console.log(data)
+            updates = JSON.parse(data);
+            if (updates.length > 0 & updates != {}) {
+                for (i = 0; i < updates.length; i++) {
+                    let text = updates[i]['text'];
+                    let time = updates[i]['time'];
+                    mystr = `<li>
+                    ${text}
+                    ${time}
+                </li>`
+                    $('#items1').append(mystr);
+                }
+            } else {
+            	mystr = `<li>
+                    Sorry, We are not able to fetch this order id and email. Make sure to type correct order Id and email</li>`
+            	$('#items1').append(mystr);
+            }
+        });
+    event.preventDefault();
+});
+
+
+
+        {% endblock %}

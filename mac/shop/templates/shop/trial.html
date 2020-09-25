@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      {% load static %}
+        <title>{% block page_title %}{% endblock %}</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+       <!-- UIkit CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/css/uikit.min.css" />
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- UIkit JS -->
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/js/uikit.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/uikit@3.5.6/dist/js/uikit-icons.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    </head>
+<body>
+
+<div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky; bottom: #transparent-sticky-navbar">
+    <nav class="uk-navbar-container" uk-navbar style="position: relative; z-index: 980;background:blue">
+        <div class="uk-navbar-left">
+
+            <ul class="uk-navbar-nav">
+                <li class="uk-active"><a href="\" style="color:#fff;font-size:4vh">Sharp</a></li>
+                <li>
+
+
+                    <div class="uk-navbar-dropdown">
+                        <ul class="uk-nav uk-navbar-dropdown-nav">
+                            <li class="uk-active"><a href="#">Active</a></li>
+                            <li><a href="#">Item</a></li>
+                            <li><a href="#">Item</a></li>
+                        </ul>
+                    </div>
+                </li>
+                <li><a href="#modal-container" uk-toggle style="color:#fff" uk-icon="icon: cart" ><p class="total"></p></a></li>
+            </ul>
+
+
+        </div>
+    </nav>
+</div>
+
+
+<!_______________Off Canvas_________________>
+
+
+
+<!______________Modal_________________>
+<div id="modal-container" class="uk-modal-container" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <h2 class="uk-modal-title">Sharp Cart</h2>
+        <div class="uk-overflow-auto">
+         <table class="uk-table uk-table-divider">
+              <tbody class="show-cart">
+              </tbody>
+         </table>
+
+            <div>Total price: $<span class="total-cart"></span></div>
+
+            <button class="uk-button uk-button-danger clear-cart" style="margin-top:14px">Clear Cart</button>
+        </div>
+    </div>
+
+
+
+    </div>
+                </li>
+            </ul>
+        </div></div>
+
+    </div>
+
+
+
+
+
+{% block body_m %}
+{% endblock %}
+{% block body_d %}
+
+{% endblock %}
+
+
+<div class="uk-section-default">
+    <div class="uk-section uk-light uk-background-cover" style="background-image: url({% static 'shop/b1.jpg'%})">
+        <h1 style="text-align:center">Sharp</h1>
+
+
+
+
+        <div class="uk-child-width-expand@s" uk-grid>
+
+
+    <div class="margin-left:2rem">
+        <h4 style="margin-left:2rem">Explore</h4>
+        <ul class="uk-list uk-list-disc">
+            <li><a href="/qv/1">Samsung Galaxy A21</a></li></a>
+            <li><a href="/qv/2">Motorola Racer Edge</a></li>
+            <li><a href="/qv/3">RealMe Narzo 10</a></li>
+            <li><a href="/qv/4">Samsung Galaxy m01</a></li>
+        </ul>
+    </div>
+            <div class="margin-left:2rem">
+        <h4 style="margin-left:2rem">About</h4>
+        <ul class="uk-list uk-list-disc">
+            <li><img class="uk-preserve-width uk-border-circle" src="{% static 'shop/india.png'%}" width="40" alt="">
+            </li>
+        </ul>
+    </div>
+
+
+</div>
+    </div>
+</div>
+
+<script>
+
+
+     var shoppingCart = (function () {
+            // =============================
+            // Private methods and propeties
+            // =============================
+            cart = [];
+
+            // Constructor
+            function Item(name, price, count) {
+                this.name = name;
+                this.price = price;
+                this.count = count;
+            }
+
+            // Save cart
+            function saveCart() {
+                sessionStorage.setItem('shoppingCart', JSON.stringify(cart));
+            }
+
+            // Load cart
+            function loadCart() {
+                cart = JSON.parse(sessionStorage.getItem('shoppingCart'));
+            }
+            if (sessionStorage.getItem("shoppingCart") != null) {
+                loadCart();
+            }
+
+
+            // =============================
+            // Public methods and propeties
+            // =============================
+            var obj = {};
+
+            // Add to cart
+            obj.addItemToCart = function (name, price, count) {
+                for (var item in cart) {
+                    if (cart[item].name === name) {
+                        cart[item].count++;
+                        saveCart();
+                        return;
+                    }
+                }
+                var item = new Item(name, price, count);
+                cart.push(item);
+                saveCart();
+            }
+            // Set count from item
+            obj.setCountForItem = function (name, count) {
+                for (var i in cart) {
+                    if (cart[i].name === name) {
+                        cart[i].count = count;
+                        break;
+                    }
+                }
+            };
+            // Remove item from cart
+            obj.removeItemFromCart = function (name) {
+                for (var item in cart) {
+                    if (cart[item].name === name) {
+                        cart[item].count--;
+                        if (cart[item].count === 0) {
+                            cart.splice(item, 1);
+                        }
+                        break;
+                    }
+                }
+                saveCart();
+            }
+
+            // Remove all items from cart
+            obj.removeItemFromCartAll = function (name) {
+                for (var item in cart) {
+                    if (cart[item].name === name) {
+                        cart.splice(item, 1);
+                        break;
+                    }
+                }
+                saveCart();
+            }
+
+            // Clear cart
+            obj.clearCart = function () {
+                cart = [];
+                saveCart();
+            }
+
+            // Count cart
+            obj.totalCount = function () {
+                var totalCount = 0;
+                for (var item in cart) {
+                    totalCount += cart[item].count;
+                }
+                return totalCount;
+            }
+
+            // Total cart
+            obj.totalCart = function () {
+                var totalCart = 0;
+                for (var item in cart) {
+                    totalCart += cart[item].price * cart[item].count;
+                }
+                return Number(totalCart.toFixed(2));
+            }
+
+            // List cart
+            obj.listCart = function () {
+                var cartCopy = [];
+                for (i in cart) {
+                    item = cart[i];
+                    itemCopy = {};
+                    for (p in item) {
+                        itemCopy[p] = item[p];
+
+                    }
+                    itemCopy.total = Number(item.price * item.count).toFixed(2);
+                    cartCopy.push(itemCopy)
+                }
+                return cartCopy;
+            }
+
+            // cart : Array
+            // Item : Object/Class
+            // addItemToCart : Function
+            // removeItemFromCart : Function
+            // removeItemFromCartAll : Function
+            // clearCart : Function
+            // countCart : Function
+            // totalCart : Function
+            // listCart : Function
+            // saveCart : Function
+            // loadCart : Function
+            return obj;
+        })();
+
+
+        // *****************************************
+        // Triggers / Events
+        // *****************************************
+        // Add item
+        $('.add-to-cart').click(function (event) {
+            event.preventDefault();
+            var name = $(this).data('name');
+            var price = Number($(this).data('price'));
+            shoppingCart.addItemToCart(name, price, 1);
+            displayCart();
+
+        });
+
+         $('.show').click(function () {
+                checkout();
+         })
+
+
+        // Clear items
+        $('.clear-cart').click(function () {
+            shoppingCart.clearCart();
+            displayCart();
+            checkout();
+        });
+
+        function checkout() {
+         var cartArray = shoppingCart.listCart();
+         var output = "";
+         for (var i in cartArray) {
+          output += "<div>"
+           + "<div class='uk-card uk-card-default uk-card-body'>" + cartArray[i].name +"<h5 style='text-align:right'>Quantity:>"+"("+cartArray[i].count+")" + "</h5>" + "</div>"+"</div>";
+        }
+         $('.check').html(output);
+         }
+
+
+
+
+
+
+        function displayCart() {
+            var cartArray = shoppingCart.listCart();
+            var output = "";
+            for (var i in cartArray) {
+                output += "<tr>"
+                    + "<td>" + cartArray[i].name + "</td>"
+                    + "<td>(" + cartArray[i].price + ")</td>"
+                    + "<td><div class='uk-input-group'><!button class='minus-item input-group-addon uk-button uk-button-default' data-name=" + cartArray[i].name + "></button>"
+                    + "<input type='number' class='item-count form-control input' data-name='" + cartArray[i].name + "' value='" + cartArray[i].count + "'>"
+                    + "<! button class='plus-item uk-button uk-button-default input-group-addon' data-name=" + cartArray[i].name + "></button></div></td>"
+                    + "<td><!button class='delete-item uk-button uk-button-default' data-name=" + cartArray[i].name + "></button></td>"
+                    + " = "
+                    + "<td>" + cartArray[i].total + "</td>"
+                    + "</tr>";
+            }
+            $('.show-cart').html(output);
+            $('.total-cart').html(shoppingCart.totalCart());
+            $('.total-count').html(shoppingCart.totalCount());
+            $('#amount').val(shoppingCart.totalCart());
+
+        }
+
+        // Delete item button
+
+        $('.show-cart').on("click", ".delete-item", function (event) {
+            var name = $(this).data('name')
+            shoppingCart.removeItemFromCartAll(name);
+            displayCart();
+            checkout();
+        })
+
+
+        // -1
+        $('.show-cart').on("click", ".minus-item", function (event) {
+            var name = $(this).data('name')
+            shoppingCart.removeItemFromCart(name);
+            displayCart();
+        })
+        // +1
+        $('.show-cart').on("click", ".plus-item", function (event) {
+            var name = $(this).data('name')
+            shoppingCart.addItemToCart(name);
+            displayCart();
+        })
+
+        // Item count input
+        $('.show-cart').on("change", ".item-count", function (event) {
+            var name = $(this).data('name');
+            var count = Number($(this).val());
+            shoppingCart.setCountForItem(name, count);
+            displayCart();
+        });
+
+        displayCart();
+
+
+        var cart = shoppingCart.listCart();
+        var list = [];
+        var a;
+        for (var i in cart) {
+        a=list.push(cart[i].name)
+        $('#items').val(list)
+        }
+        {% if alert %}
+        alert("Order Placed Successfully;Your Tracking Id is {{id}}")
+        {% endif %}
+
+
+
+
+
+
+
+
+
+
+    UIkit.util.on('#js-scroll-trigger', 'scrolled', function () {
+        alert('Done.');
+    });
+
+
+
+    //code for audio
+
+
+   function MyAudio(){
+        console.log("Playing Sound");
+            //audiogo = new Audio ("{% static 'shop/BlackWave.mp3'%}");
+            //audiogo.play();
+        var x = document.getElementsByClassName("audio_trigger");
+        console.log(x.value);
+    };
+
+
+
+
+
+
+
+    //code for wishlist
+    //code for reviewSystem
+
+
+    const star1 = document.getElementsByClassName("clk1");
+    const star2 = document.getElementsByClassName("clk2");
+    const star3 = document.getElementsByClassName("clk3");
+    const star4 = document.getElementsByClassName("clk4");
+    const star5 = document.getElementsByClassName("clk5");
+    $( ".clk1" ).click(function() {
+   console.log("clicked")
+   star1.style.background="gold";
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>

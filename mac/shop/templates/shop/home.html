@@ -1,0 +1,44 @@
+
+{%  extends 'shop/trial.html'%}
+{% load static %}
+{% block body_d %}
+<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="ratio: 7:3; animation: push;autoplay:true;autoplay-interval:3000">
+
+    <ul class="uk-slideshow-items">
+        <li>
+            <img src="{% static 'shop/iph.jpg'%}" alt="" uk-cover>
+        </li>
+        <li>
+            <img src="{% static 'shop/tv.jpg'%}" alt="" uk-cover>
+        </li>
+        <li>
+            <img src="{% static 'shop/pd.jpg'%}" alt="" uk-cover>
+        </li>
+    </ul>
+
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+
+</div>
+
+<div class="uk-child-width-1-4@m" uk-grid style="margin-top:5vh">
+    {% for x in products%}
+    <div>
+        <div class="uk-card uk-card-default">
+            <div class="uk-card-media-top">
+                <img src="/media/{{x.product_img}}" class="uk-align-center" style="padding-left:2vh" uk-img>
+            </div>
+            <div class="uk-card-body">
+                <h3 class="uk-card-title" style="text-align:center">{{x.product_name}}</h3>
+
+                <center><button class="uk-button uk-button-secondary uk-button-small  add-to-cart" value="{{x.product_name}}" id="{{x.product_name}}" data-name="{{x.product_name}}" data-price="{{x.product_price}}" id="cart_add_alert"   style="text-align:center;margin-left:auto" onclick="UIkit.notification({message: '{{x.product_name }} is added to your cart'})">Add to Cart</button>
+                    <a href="/qv/{{x.product_id}}" class="uk-button uk-button-secondary uk-button-small" value={{x.product_price}}  style="text-align:center;margin-left:auto">Quick View</a></center>
+
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+
+{% endblock %}

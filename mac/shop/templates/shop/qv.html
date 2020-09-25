@@ -1,0 +1,120 @@
+{% extends 'shop/trial.html' %}
+{% block body_m %}
+
+
+{% for x in product%}
+<nav class="uk-navbar-container" uk-navbar>
+    <div class="uk-navbar-left">
+
+        <ul class="uk-navbar-nav">
+            <li class="uk-active"><a href="#">{{x.product_name}}</a></li>
+            <li>
+                <a href="#">Buy</a>
+            </li>
+        </ul>
+
+    </div>
+</nav>
+<img src="/media/{{x.product_img}}" class="uk-align-center" style="width:40vh" uk-img>
+<h1 style="text-align:center">{{x.product_name}}</h1>
+<h2 style="text-align:center">₹.{{x.product_price}}</h2>
+    <button class="uk-button uk-button-secondary uk-button-small uk-align-center" >Buy</button>
+<hr>
+<h2 style="text-align:center">Product Description:</h2>
+<div class="uk-container">
+<p class="uk-dropcap">{{x.product_desc}}</p>
+</div>
+<hr>
+<div class="uk-container">
+    <h1 style="text-align:center">Product View</h1>
+    <div class="uk-visible@m">
+<div class="uk-position-relative"  uk-slideshow="animation: fade;autoplay: true;" >
+
+    <ul class="uk-slideshow-items" style="margin-top:5vh">
+        <li>
+            <img src="/media/{{x.product_img_1}}" class="uk-align-center" style="width:50vh"  alt="" >
+        </li>
+        <li>
+            <img src="/media/{{x.product_img_2}}" class="uk-align-center" style="width:50vh" alt="" >
+        </li>
+        <li>
+            <img src="/media/{{x.product_img_3}}" class="uk-align-center" style="width:50vh" alt="" >
+        </li>
+        <li>
+            <img src="/media/{{x.product_img_4}}" class="uk-align-center" style="width:50vh" alt="" >
+        </li>
+    </ul>
+
+    <div class="uk-position-left uk-position-small">
+        <ul class="uk-thumbnav-vertical">
+            <li uk-slideshow-item="0"><a href="#"><img src="/media/{{x.product_img_1}}" width="40px" alt=""></a></li>
+            <li uk-slideshow-item="1"><a href="#"><img src="/media/{{x.product_img_2}}" width="40px" alt=""></a></li>
+            <li uk-slideshow-item="2"><a href="#"><img src="/media/{{x.product_img_3}}" width="40px" alt=""></a></li>
+            <li uk-slideshow-item="3"><a href="#"><img src="/media/{{x.product_img_4}}" width="40px" alt=""></a></li>
+        </ul>
+    </div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!____________Mobile View______________________>
+<div class="uk-hidden@m">
+<div class="uk-position-relative uk-visible-toggle uk-light" tabindex="-1" uk-slideshow="animation: push;autoplay: true;autoplay-interval:3000">
+
+    <ul class="uk-slideshow-items">
+        <li>
+             <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
+                <img src="/media/{{x.product_img_1}}" class="uk-align-center" style="width:12vh" alt="" >
+            </div>
+        </li>
+        <li>
+            <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
+                <img src="/media/{{x.product_img_2}}" class="uk-align-center" style="width:12vh" alt="" >
+            </div>
+        </li>
+        <li>
+             <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
+                <img src="/media/{{x.product_img_3}}" class="uk-align-center" style="width:12vh" alt="" >
+            </div>
+        </li>
+        <li>
+            <div class="uk-position-cover uk-animation-kenburns uk-animation-reverse uk-transform-origin-top-right">
+                <img src="/media/{{x.product_img_4}}"  class="uk-align-center" style="width:12vh" alt="">
+            </div>
+        </li>
+    </ul>
+
+    <a class="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous uk-slideshow-item="previous"></a>
+    <a class="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next uk-slideshow-item="next"></a>
+
+</div>
+</div>
+
+
+<hr>
+
+
+<div class="uk-container">
+<div class="uk-child-width-1-2@s" uk-grid>
+    <div>
+        <div class="uk-dark uk-background-muted uk-padding">
+           <h1 style="text-align:center">Product Ratings</h1>
+            <h1 style="text-align:center">(4.5/5)</h1>
+        </div>
+    </div>
+    <div>
+        <div class="uk-dark uk-background-muted uk-padding">
+            <h1>Customer Reviews</h1>
+            <h3>80 % people liked this product</h3>
+            <progress id="js-progressbar" class="uk-progress" value="80" max="100"></progress>
+            <a href="/rate/{{x.product_id}}" class="uk-button uk-button-default">See All Reviews</a>
+        </div>
+    </div>
+</div>
+</div>
+
+
+{%endfor%}
+{% endblock %}

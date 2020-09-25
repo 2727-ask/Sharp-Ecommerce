@@ -1,0 +1,61 @@
+{% extends 'shop/trial.html' %}
+ {% block body_m %}
+
+<div class="uk-container">
+
+    <h2 style="margin-top:10px">Your Cart</h2>
+    <button class="uk-button uk-button-secondary uk-width-1-1 show">View Your Products</button>
+<div class="uk-child-width-expand@s uk-text-center " uk-grid>
+
+</div>
+
+
+<dl class="uk-description-list uk-description-list-divider ">
+    <div class="check">
+
+    </div>
+</dl>
+
+
+
+<div class="uk-container" style="margin-top:60px">
+<form class="uk-grid-small" uk-grid method="post" action="/checkout/">{% csrf_token %}
+    <input type="hidden" name="items" id="items">
+    <input type="hidden" name="amount" id="amount">
+    <div class="uk-width-1-2@s">
+        <input class="uk-input" type="text" placeholder="First Name" name="fname" id="fname" required>
+    </div>
+    <div class="uk-width-1-2@s">
+        <input class="uk-input" type="text" placeholder="Last Name" name="lname" id="lname" required>
+    </div>
+    <div class="uk-width-1-1">
+        <input class="uk-input" type="text" placeholder="Enter Current Address" name="address" id="address" required>
+    </div>
+    <div class="uk-width-1-3@s">
+        <input class="uk-input" type="city" placeholder="City" name="city" id="city" required>
+    </div>
+    <div class="uk-width-1-3@s">
+        <input class="uk-input" type="state" placeholder="State" name="state" id="state" required>
+    </div>
+    <div class="uk-width-1-3@s">
+        <input class="uk-input" type="zip" placeholder="Pin/Zip code" name="zip_code" id="zip_code" required>
+    </div>
+
+    <div class="uk-width-1-3@s">
+        <input class="uk-input" type="email" placeholder="Email Address" name="mail" id="mail" required>
+    </div>
+    <div class="uk-width-1-3@s">
+        <input class="uk-input" type="tel" placeholder="Mobile No.1" name="phone1" id="phone1" required>
+    </div>
+    <div class="uk-width-1-3@s">
+        <input class="uk-input" type="tel" placeholder="Mobile No.2" name="phone2" id="phone2" required>
+    </div>
+     <div class="uk-width-1-3@s">
+    <button class="uk-button uk-button-secondary" type="submit">Place Order</button>
+     </div>
+
+</form>
+</div>
+</div>
+
+{% endblock %}

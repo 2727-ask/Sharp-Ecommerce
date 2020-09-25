@@ -1,0 +1,75 @@
+{% extends 'shop/trial.html'%}
+{% load static %}
+{% block body_m%}
+
+<h1 style="text-align:center">Product Reviews And Ratings</h1>
+{% for x in getName %}
+<div class="uk-container">
+<ul class="uk-comment-list">
+    <li>
+        <article class="uk-comment uk-visible-toggle" tabindex="-1">
+            <header class="uk-comment-header uk-position-relative">
+                <div class="uk-grid-medium uk-flex-middle" uk-grid>
+                    <div class="uk-width-auto">
+                        <img class="uk-comment-avatar" src="{% static 'shop/user.png'%}" width="80" height="80" alt="">
+                    </div>
+                    <div class="uk-width-expand">
+                        <span class="uk-comment-title uk-margin-remove"><a class="uk-link-reset" href="#">{{x.cust_fname}}.{{x.cust_lname}}</a></span><span><h3>Rated:{{x.star}}<span uk-icon="icon: star"></span></h3></span></span>
+                        <p class="uk-comment-meta uk-margin-remove-top"><a class="uk-link-reset" href="#">{{x.timestamp}}</a></p>
+                    </div>
+                </div>
+                <div class="uk-position-top-right uk-position-small uk-hidden-hover"><a class="uk-link-muted" href="#">Reply</a></div>
+            </header>
+            <div class="uk-comment-body">
+                <p>{{x.review}}</p>
+            </div>
+        </article>
+    </li>
+</ul>
+    <hr>
+</div>
+
+
+
+{% endfor %}
+
+
+<form method="post" style="margin-top:5vh">{% csrf_token %}
+    <div class="uk-container">
+    <fieldset class="uk-fieldset">
+
+        <legend class="uk-legend">Rate Product</legend>
+
+        <div class="uk-margin">
+            <input class="uk-input" type="text" placeholder="First Name" id="fname" name="fname" required>
+        </div>
+        <div class="uk-margin">
+            <input class="uk-input" type="text" placeholder="Last Name" name="lname" required>
+        </div>
+        <div class="uk-margin">
+            <input class="uk-input" type="email" placeholder="Email" name="mail" required>
+        </div>
+        <div class="uk-margin">
+            <input class="input" type="number" placeholder="Rate/5" width="10px" min="1" max="5" maxlength="1" size="10" name="star" required>
+            <span uk-icon="icon: star"></span>
+
+
+
+
+        </div>
+
+
+
+
+        <div class="uk-margin">
+            <textarea class="uk-textarea" rows="5" placeholder="Comments" name="comments" required ></textarea>
+        </div>
+        <button class="uk-button uk-button-secondary" type="submit">Submit</button>
+
+    </fieldset>
+    </div>
+</form>
+
+
+
+{% endblock%}
